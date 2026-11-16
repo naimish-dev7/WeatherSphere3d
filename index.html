@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#050814" />
-  <meta name="description" content="WeatherSphere 3D — Flagship Glassmorphism Weather PWA" />
-  <title>WeatherSphere 3D</title>
+  <meta name="description" content="WeatherSphere 3D v2 — Flagship Glassmorphism Weather PWA" />
+  <title>WeatherSphere 3D v2</title>
   
   <link rel="manifest" href="./manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -86,7 +86,6 @@
       transform: scale(0.96) !important;
     }
 
-    /* Staggered entrance animation class */
     .stagger-in {
       animation: springSlideUp 0.65s var(--ios-spring) both;
     }
@@ -286,7 +285,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Editorial Micro-Kickers */
     .micro-kicker {
       font-size: 0.65rem;
       text-transform: uppercase;
@@ -398,21 +396,24 @@
       flex-shrink: 0;
     }
 
-    /* 3-Column Bento Stats */
-    .stats-3col {
+    /* --- FEATURE 3: 6-Metric Bento Grid (2x3) --- */
+    .bento-grid-6 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
-    .stat-pill {
-      padding: 12px;
+    .bento-card {
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
-    .stat-label {
+    .bento-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-size: 0.62rem;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -420,31 +421,36 @@
       font-weight: 700;
     }
 
-    .stat-val-wrap {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .bento-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--accent);
+      flex-shrink: 0;
     }
 
-    .stat-value {
-      font-size: 1.05rem;
+    .bento-val {
+      font-size: 1.15rem;
       font-weight: 800;
     }
 
-    .wind-arrow {
-      display: inline-block;
-      font-size: 0.9rem;
-      transition: transform 0.5s var(--ios-spring);
-      color: var(--accent);
-    }
-
-    .stat-sub {
-      font-size: 0.62rem;
+    .bento-sub {
+      font-size: 0.65rem;
       color: var(--accent);
       font-weight: 600;
     }
 
-    /* Hourly Forecast */
+    .wind-fan-svg {
+      width: 18px;
+      height: 18px;
+      animation: spinFan 3s linear infinite;
+      transform-origin: center;
+    }
+    @keyframes spinFan {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --- FEATURE 1: Interactive Scrubbable Hourly Temperature Curve --- */
     .forecast-card { padding: 16px; }
 
     .card-header {
@@ -469,11 +475,26 @@
 
     .sparkline-box {
       width: 100%;
-      height: 40px;
-      margin-bottom: 8px;
+      height: 60px;
+      margin-bottom: 10px;
+      position: relative;
     }
 
     .sparkline-svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* Interactive Hour Readout Bar */
+    .hourly-readout-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 14px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
 
     .hourly-row {
       display: flex;
@@ -499,16 +520,18 @@
       gap: 5px;
       flex-shrink: 0;
       scroll-snap-align: start;
+      cursor: pointer;
+    }
+    .hourly-mini-card.active {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: var(--accent);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
     }
 
     .hourly-time { font-size: 0.65rem; color: var(--muted); font-weight: 600; }
     .hourly-svg-icon { width: 32px; height: 32px; }
     .hourly-temp { font-size: 0.78rem; font-weight: 800; }
-    .pop-badge {
-      font-size: 0.6rem;
-      color: #38bdf8;
-      font-weight: 700;
-    }
+    .pop-badge { font-size: 0.6rem; color: #38bdf8; font-weight: 700; }
 
     /* Radar Map */
     .radar-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
@@ -539,7 +562,54 @@
     .radar-timeline-scrubber { flex: 1; accent-color: var(--accent); cursor: pointer; }
     .radar-time-display { font-size: 0.68rem; font-weight: 700; color: var(--muted); min-width: 60px; text-align: right; }
 
-    /* 7-Day Forecast Rows */
+    /* --- FEATURE 4: Detailed Air Quality Card --- */
+    .aqi-card { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .aqi-header-row { display: flex; justify-content: space-between; align-items: center; }
+    .aqi-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .aqi-bar-wrap { position: relative; height: 10px; border-radius: 99px; background: rgba(255,255,255,0.1); overflow: hidden; margin: 4px 0; }
+    .aqi-spectrum-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, #10b981 0%, #facc15 35%, #fb923c 60%, #ef4444 80%, #7c2d12 100%);
+    }
+    .aqi-marker {
+      position: absolute; top: -2px; width: 4px; height: 14px; background: #fff; border-radius: 2px;
+      box-shadow: 0 0 8px #fff; transform: translateX(-50%); transition: left 0.6s var(--ios-spring);
+    }
+    .aqi-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .aqi-sub-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 8px 6px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .aqi-sub-label { font-size: 0.58rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+    .aqi-sub-val { font-size: 0.82rem; font-weight: 800; }
+    .aqi-progress-mini { height: 3px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden; margin-top: 2px; }
+    .aqi-progress-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.5s ease; }
+
+    /* --- FEATURE 5: Live Sun Path Arc Card --- */
+    .sun-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .sun-arc-box { position: relative; height: 85px; width: 100%; margin-top: 4px; overflow: visible; }
+    .sun-arc-svg { width: 100%; height: 100%; overflow: visible; }
+    .sun-times-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; color: var(--muted); font-weight: 600; margin-top: -4px; }
+
+    /* --- FEATURE 2: Expandable 15-Day Forecast (Including Yesterday) --- */
     .daily-list { display: flex; flex-direction: column; gap: 8px; }
     .daily-row {
       display: flex;
@@ -552,8 +622,9 @@
       font-size: 0.78rem;
       gap: 10px;
     }
+    .daily-row.is-yesterday { opacity: 0.8; border-style: dashed; }
 
-    .daily-day-name { width: 60px; font-weight: 700; }
+    .daily-day-name { width: 75px; font-weight: 700; }
     .daily-icon-desc { flex: 1; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.72rem; }
     .daily-svg-icon { width: 28px; height: 28px; flex-shrink: 0; }
     .daily-pop-tag { font-size: 0.65rem; color: var(--accent); font-weight: 700; width: 30px; text-align: center; }
@@ -580,6 +651,24 @@
       background: linear-gradient(90deg, #38bdf8, #fb923c);
       transition: all 0.5s var(--ios-spring);
     }
+
+    .expand-forecast-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text);
+      padding: 10px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .expand-forecast-btn:hover { background: rgba(56, 189, 248, 0.2); border-color: var(--accent); color: var(--accent); }
 
     .app-footer {
       text-align: center;
@@ -676,7 +765,7 @@
     <header class="glass top-bar interactive">
       <div class="brand">
         <span class="pulse-dot"></span>
-        <span>WEATHERSPHERE 3D</span>
+        <span>WEATHERSPHERE 3D v2</span>
       </div>
       <div class="top-actions">
         <div class="unit-toggle">
@@ -737,53 +826,164 @@
       </section>
     </div>
 
-    <section class="stats-3col interactive stagger-in" style="animation-delay: 0.08s;">
-      <div class="glass stat-pill">
-        <span class="stat-label">WIND</span>
-        <div class="stat-val-wrap">
-          <span class="wind-arrow" id="windArrow">↑</span>
-          <span class="stat-value" id="windVal">--</span>
-        </div>
-        <span class="stat-sub" id="windDirLabel">N 0 km/h</span>
-      </div>
-
-      <div class="glass stat-pill">
-        <span class="stat-label">HUMIDITY</span>
-        <div class="stat-val-wrap">
-          <span class="stat-value" id="humVal">--%</span>
-        </div>
-        <span class="stat-sub" id="dewPointSub">Dew Point --°</span>
-      </div>
-
-      <div class="glass stat-pill">
-        <span class="stat-label">UV / AQI</span>
-        <div class="stat-val-wrap">
-          <span class="stat-value" id="uvVal">--</span>
-        </div>
-        <span class="stat-sub" id="uvRiskSub">Low Risk</span>
-      </div>
-    </section>
-
+    <!-- FEATURE 3: 6-Metric Bento Grid (2x3) -->
     <div>
-      <div class="micro-kicker">• 24-HOUR FORECAST</div>
-      <section class="glass forecast-card interactive stagger-in" style="animation-delay: 0.14s;">
+      <div class="micro-kicker">• ATMOSPHERIC BENTO TELEMETRY</div>
+      <section id="bento-metrics-grid" class="bento-grid-6 interactive stagger-in" style="animation-delay: 0.08s;">
+        <!-- 1. Feels Like -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+            FEELS LIKE
+          </div>
+          <div class="bento-val" id="bentoFeelsVal">--°</div>
+          <div class="bento-sub" id="bentoFeelsSub">Humidity adjusted</div>
+        </div>
+
+        <!-- 2. Wind Direction & Speed -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon wind-fan-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4m-3.17-6.83l-2.83 2.83m-8 8l-2.83 2.83m0-13.66l2.83 2.83m8 8l2.83 2.83"/></svg>
+            WIND & DIR
+          </div>
+          <div class="bento-val" id="bentoWindVal">--</div>
+          <div class="bento-sub" id="bentoWindSub">N 0 km/h</div>
+        </div>
+
+        <!-- 3. Humidity -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            HUMIDITY
+          </div>
+          <div class="bento-val" id="bentoHumVal">--%</div>
+          <div class="bento-sub" id="bentoDewSub">Dew pt --°</div>
+        </div>
+
+        <!-- 4. UV Index -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2"/></svg>
+            UV INDEX
+          </div>
+          <div class="bento-val" id="bentoUvVal">--</div>
+          <div class="bento-sub" id="bentoUvSub">Low Risk</div>
+        </div>
+
+        <!-- 5. Visibility -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            VISIBILITY
+          </div>
+          <div class="bento-val" id="bentoVisVal">-- km</div>
+          <div class="bento-sub" id="bentoVisSub">Crystal clear</div>
+        </div>
+
+        <!-- 6. Pressure -->
+        <div class="glass bento-card">
+          <div class="bento-header">
+            <svg class="bento-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+            PRESSURE
+          </div>
+          <div class="bento-val" id="bentoPresVal">-- hPa</div>
+          <div class="bento-sub" id="bentoPresSub">Stable barometer</div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FEATURE 1: Interactive Scrubbable Hourly Temperature Curve -->
+    <div>
+      <div class="micro-kicker">• 24-HOUR FORECAST CURVE</div>
+      <section id="hourly-curve-card" class="glass forecast-card interactive stagger-in" style="animation-delay: 0.14s;">
         <div class="card-header">
-          <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">HOURLY TELEMETRY SPARKLINE</span>
+          <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">SCRUBBABLE TEMP CURVE & WIND</span>
           <span class="golden-hour-tag" id="goldenHourTag">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
             Sunset in --
           </span>
         </div>
+
         <div class="sparkline-box">
-          <svg class="sparkline-svg" id="sparklineSvg" viewBox="0 0 300 40" preserveAspectRatio="none"></svg>
+          <svg class="sparkline-svg" id="sparklineSvg" viewBox="0 0 300 60" preserveAspectRatio="none"></svg>
         </div>
+
+        <div class="hourly-readout-box" id="hourlyReadoutBox">
+          <span>Tap any hour below to inspect telemetry</span>
+          <span id="hourlyReadoutVal" style="color:var(--accent); font-weight:700;">--</span>
+        </div>
+
         <div class="hourly-row" id="hourlyRow"></div>
       </section>
     </div>
 
+    <!-- FEATURE 4: Detailed Air Quality Card (Open-Meteo Air Quality API) -->
+    <div>
+      <div class="micro-kicker">• ATMOSPHERIC AIR QUALITY</div>
+      <section id="aqi-detail-card" class="glass aqi-card interactive stagger-in" style="animation-delay: 0.18s;">
+        <div class="aqi-header-row">
+          <div>
+            <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">AIR QUALITY INDEX (AQI)</span>
+            <div style="font-size:1.3rem; font-weight:800; margin-top:2px;" id="aqiMainVal">--</div>
+          </div>
+          <div class="aqi-badge" id="aqiBadgeLabel">Good</div>
+        </div>
+
+        <div class="aqi-bar-wrap">
+          <div class="aqi-spectrum-bg"></div>
+          <div class="aqi-marker" id="aqiMarker" style="left: 10%;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:0.58rem; color:var(--muted); font-weight:700;">
+          <span>I (Good)</span><span>II (Mod)</span><span>III (Sensitive)</span><span>IV (Unhealthy)</span><span>V (Very Unh)</span><span>VI (Hazard)</span>
+        </div>
+
+        <div class="aqi-sub-grid">
+          <div class="aqi-sub-item">
+            <span class="aqi-sub-label">PM2.5</span>
+            <span class="aqi-sub-val" id="pm25Val">--</span>
+            <div class="aqi-progress-mini"><div class="aqi-progress-fill" id="pm25Fill" style="width: 20%;"></div></div>
+          </div>
+          <div class="aqi-sub-item">
+            <span class="aqi-sub-label">PM10</span>
+            <span class="aqi-sub-val" id="pm10Val">--</span>
+            <div class="aqi-progress-mini"><div class="aqi-progress-fill" id="pm10Fill" style="width: 25%;"></div></div>
+          </div>
+          <div class="aqi-sub-item">
+            <span class="aqi-sub-label">CO</span>
+            <span class="aqi-sub-val" id="coVal">--</span>
+            <div class="aqi-progress-mini"><div class="aqi-progress-fill" id="coFill" style="width: 15%;"></div></div>
+          </div>
+          <div class="aqi-sub-item">
+            <span class="aqi-sub-label">SO2</span>
+            <span class="aqi-sub-val" id="so2Val">--</span>
+            <div class="aqi-progress-mini"><div class="aqi-progress-fill" id="so2Fill" style="width: 10%;"></div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FEATURE 5: Live Sun Path Arc Card -->
+    <div>
+      <div class="micro-kicker">• SOLAR EPHEMERIS ARC</div>
+      <section id="sun-arc-card" class="glass sun-card interactive stagger-in" style="animation-delay: 0.22s;">
+        <div class="card-header" style="margin-bottom:0;">
+          <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">LIVE SUN POSITION & PATH</span>
+          <span style="font-size:0.65rem; color:#f59e0b; font-weight:700;" id="daylightDurationLabel">Daylight --h</span>
+        </div>
+        <div class="sun-arc-box">
+          <svg class="sun-arc-svg" id="sunArcSvg" viewBox="0 0 300 80" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="sun-times-row">
+          <span id="sunriseTimeText">Sunrise --:--</span>
+          <span id="sunsetTimeText">Sunset --:--</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- Radar Map -->
     <div>
       <div class="micro-kicker">• ATMOSPHERIC RADAR</div>
-      <section class="glass radar-card interactive stagger-in" style="animation-delay: 0.2s;">
+      <section class="glass radar-card interactive stagger-in" style="animation-delay: 0.25s;">
         <div class="card-header" style="margin-bottom:4px;">
           <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">LIVE RAIN & CLOUD RADAR</span>
           <span style="font-size:0.65rem; color:var(--accent); font-weight:700;">ZOOM EARTH TIMELINE</span>
@@ -797,18 +997,23 @@
       </section>
     </div>
 
+    <!-- FEATURE 2: Expandable 15-Day Forecast (Including Yesterday) -->
     <div>
-      <div class="micro-kicker">• 7-DAY OUTLOOK</div>
-      <section class="glass forecast-card interactive stagger-in" style="animation-delay: 0.25s;">
+      <div class="micro-kicker">• 15-DAY OUTLOOK</div>
+      <section id="forecast-15day-card" class="glass forecast-card interactive stagger-in" style="animation-delay: 0.28s;">
         <div class="card-header">
-          <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">SATELLITE SEVEN-DAY SPREAD</span>
+          <span style="font-size:0.7rem; font-weight:700; color:var(--muted); letter-spacing:0.5px;">SATELLITE 15-DAY SPREAD (YESTERDAY + 14 DAYS)</span>
         </div>
         <div class="daily-list" id="dailyContainer"></div>
+        <button class="expand-forecast-btn" id="toggle-15day-btn" onclick="toggleExpandForecast()">
+          <span id="expandBtnText">View 15-Day Full Outlook</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
       </section>
     </div>
 
     <footer class="app-footer">
-      created by naimish • Flagship 3D Weather PWA
+      created by naimish • Flagship 3D Weather PWA v2
     </footer>
 
   </main>
@@ -1006,9 +1211,7 @@
           </circle>
         `;
       } else {
-        inner = `
-          <circle cx="50" cy="50" r="24" fill="#fde047"/>
-        `;
+        inner = `<circle cx="50" cy="50" r="24" fill="#fde047"/>`;
       }
 
       return `<svg class="svg-weather-art" viewBox="0 0 100 100" width="${s}" height="${s}">${inner}</svg>`;
@@ -1019,9 +1222,12 @@
       unit: localStorage.getItem('ws_unit') || 'C',
       favorites: JSON.parse(localStorage.getItem('ws_favs') || '["Shahjahanpur", "Tokyo", "London", "New York"]'),
       currentData: null,
+      currentAirData: null,
       currentCity: 'Shahjahanpur',
       currentRegion: 'Uttar Pradesh, India',
-      coords: { lat: 27.88, lon: 79.91, elev: 155 }
+      coords: { lat: 27.88, lon: 79.91, elev: 155 },
+      forecastExpanded: false,
+      activeHourIdx: 0
     };
 
     function animateNumber(elementId, targetVal, suffix = '') {
@@ -1123,19 +1329,15 @@
       let bodyBg = '#050814';
 
       if (!isDay && (hour < 5 || hour > 21)) {
-        // Deep starlit obsidian-indigo night
         bgHex = 0x03050c;
         bodyBg = 'linear-gradient(135deg, #03050c, #090d16)';
       } else if (hour >= 5 && hour <= 7 || hour >= 17 && hour <= 19) {
-        // Warm coral-amber golden hour
         bgHex = 0x1a120c;
         bodyBg = 'linear-gradient(135deg, #1c1109, #381806)';
       } else if (code >= 51) {
-        // Moody slate-teal rain/storm
         bgHex = 0x061418;
         bodyBg = 'linear-gradient(135deg, #041014, #0b2228)';
       } else if (isDay) {
-        // Crisp azure daylight
         bgHex = 0x081628;
         bodyBg = 'linear-gradient(135deg, #071324, #0f2a4a)';
       }
@@ -1166,9 +1368,7 @@
     window.addEventListener('pointerup', () => isDragging = false);
 
     let isPageVisible = true;
-    document.addEventListener('visibilitychange', () => {
-      isPageVisible = !document.hidden;
-    });
+    document.addEventListener('visibilitychange', () => { isPageVisible = !document.hidden; });
 
     function animate3D() {
       requestAnimationFrame(animate3D);
@@ -1251,7 +1451,7 @@
     }
     updateAndRenderRain();
 
-    // --- 6. LEAFLET RADAR (ZOOM EARTH STYLE TIMELINE) ---
+    // --- 6. LEAFLET RADAR ---
     let map = null, radarLayers = [], radarTimestamps = [], currentFrameIdx = 0, radarInterval = null, isRadarPlaying = false;
     function initRadarMap(lat, lon) {
       if (!map) {
@@ -1305,7 +1505,7 @@
     }
     function stopRadarPlayback() { isRadarPlaying = false; document.getElementById('radarPlayBtn').textContent = '▶'; if (radarInterval) clearInterval(radarInterval); }
 
-    // --- 7. WEATHER DATA RENDERING & CALCULATIONS ---
+    // --- 7. WEATHER DATA & API FETCHING ---
     function formatTemp(celsius) {
       if (celsius === undefined || celsius === null) return 0;
       return state.unit === 'F' ? Math.round((celsius * 9 / 5) + 32) : Math.round(celsius);
@@ -1323,19 +1523,33 @@
       document.getElementById('unitC').classList.toggle('active', unit === 'C');
       document.getElementById('unitF').classList.toggle('active', unit === 'F');
       if (state.currentData) renderWeatherData(state.currentData);
+      if (state.currentAirData) renderAirQualityData(state.currentAirData);
     }
 
     async function fetchWeather(lat, lon, cityName, regionName) {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,wind_speed_10m,wind_direction_10m,uv_index,dew_point_2m&hourly=temperature_2m,weather_code,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_probability_max&timezone=auto`;
+      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,is_day,weather_code,wind_speed_10m,wind_direction_10m,uv_index,dew_point_2m,surface_pressure,visibility&hourly=temperature_2m,weather_code,precipitation_probability,wind_speed_10m,wind_direction_10m,uv_index&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_probability_max&past_days=1&forecast_days=14&timezone=auto`;
+      const airUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=us_aqi,pm2_5,pm10,carbon_monoxide,sulphur_dioxide&timezone=auto`;
+
       try {
-        const res = await fetch(url);
-        const data = await res.json();
-        state.currentData = data;
+        const [wRes, aRes] = await Promise.all([
+          fetch(weatherUrl),
+          fetch(airUrl).catch(() => null)
+        ]);
+        const wData = await wRes.json();
+        state.currentData = wData;
         state.currentCity = cityName;
         state.currentRegion = regionName || 'Satellite Lock Active';
-        state.coords = { lat, lon, elev: Math.round(data.elevation || 150) };
+        state.coords = { lat, lon, elev: Math.round(wData.elevation || 150) };
 
-        renderWeatherData(data);
+        if (aRes) {
+          try {
+            const aData = await aRes.json();
+            state.currentAirData = aData;
+            renderAirQualityData(aData);
+          } catch (e) {}
+        }
+
+        renderWeatherData(wData);
         initRadarMap(lat, lon);
       } catch (e) {}
     }
@@ -1349,7 +1563,7 @@
 
       updateDynamicSkyAndLighting(isDay, cur.weather_code, currentHour);
 
-      // Hero Card Updates
+      // Hero Card
       document.getElementById('cityName').textContent = state.currentCity;
       document.getElementById('regionName').textContent = state.currentRegion;
       document.getElementById('svgArtWrap').innerHTML = getWeatherSVG(cur.weather_code, isDay, 120);
@@ -1357,8 +1571,8 @@
       const unitSymbol = `°${state.unit}`;
       animateNumber('currentTemp', formatTemp(cur.temperature_2m), unitSymbol);
 
-      const high = formatTemp(daily.temperature_2m_max[0]);
-      const low = formatTemp(daily.temperature_2m_min[0]);
+      const high = formatTemp(daily.temperature_2m_max[1] || daily.temperature_2m_max[0]);
+      const low = formatTemp(daily.temperature_2m_min[1] || daily.temperature_2m_min[0]);
       const feels = formatTemp(cur.apparent_temperature);
       document.getElementById('feelsLike').textContent = `Feels like ${feels}${unitSymbol} • H: ${high}${unitSymbol} L: ${low}${unitSymbol}`;
 
@@ -1367,7 +1581,7 @@
       if (cur.weather_code >= 51) {
         aiWrap.innerHTML = getWeatherSVG(cur.weather_code, isDay, 20);
         document.getElementById('aiText').textContent = 'Precipitation active. Carry rain gear and drive carefully.';
-      } else if (isDay && (cur.uv_index || daily.uv_index_max[0]) >= 6) {
+      } else if (isDay && (cur.uv_index || daily.uv_index_max[1]) >= 6) {
         aiWrap.innerHTML = getWeatherSVG(0, true, 20);
         document.getElementById('aiText').textContent = 'High solar irradiance. Sun protection recommended.';
       } else {
@@ -1375,46 +1589,50 @@
         document.getElementById('aiText').textContent = isDay ? 'Optimal atmospheric visibility and stable air pressure.' : 'Calm starlit night with pristine atmospheric conditions.';
       }
 
-      // 3-Stat Pills
+      // --- FEATURE 3: 6-Metric Bento Grid Updates ---
+      animateNumber('bentoFeelsVal', feels, unitSymbol);
+      document.getElementById('bentoFeelsSub').textContent = cur.apparent_temperature > cur.temperature_2m ? 'Humid heat effect' : 'Wind chill effect';
+
       const speedUnit = state.unit === 'F' ? ' mph' : ' km/h';
-      animateNumber('windVal', formatSpeed(cur.wind_speed_10m), speedUnit);
-      document.getElementById('windArrow').style.transform = `rotate(${cur.wind_direction_10m}deg)`;
-      document.getElementById('windDirLabel').textContent = `${cur.wind_direction_10m}° ${formatSpeed(cur.wind_speed_10m)}${speedUnit}`;
+      animateNumber('bentoWindVal', formatSpeed(cur.wind_speed_10m), speedUnit);
+      document.getElementById('bentoWindSub').textContent = `${cur.wind_direction_10m}° direction`;
 
-      animateNumber('humVal', cur.relative_humidity_2m, '%');
+      animateNumber('bentoHumVal', cur.relative_humidity_2m, '%');
       const dew = cur.dew_point_2m ?? (cur.temperature_2m - ((100 - cur.relative_humidity_2m) / 5));
-      document.getElementById('dewPointSub').textContent = `Dew Point ${formatTemp(dew)}${unitSymbol}`;
+      document.getElementById('bentoDewSub').textContent = `Dew pt ${formatTemp(dew)}${unitSymbol}`;
 
-      const uvVal = daily?.uv_index_max?.[0] ?? cur.uv_index ?? 0;
-      animateNumber('uvVal', uvVal);
-      document.getElementById('uvRiskSub').textContent = uvVal > 6 ? 'High Risk' : uvVal > 3 ? 'Moderate' : 'Low Risk';
+      const uvVal = daily?.uv_index_max?.[1] ?? cur.uv_index ?? 0;
+      animateNumber('bentoUvVal', uvVal);
+      document.getElementById('bentoUvSub').textContent = uvVal > 6 ? 'High Risk' : uvVal > 3 ? 'Moderate' : 'Low Risk';
+
+      const visKm = cur.visibility !== undefined ? (cur.visibility / 1000) : 10;
+      const visVal = state.unit === 'F' ? Math.round(visKm * 0.621371) : Math.round(visKm);
+      const visUnit = state.unit === 'F' ? ' mi' : ' km';
+      animateNumber('bentoVisVal', visVal, visUnit);
+      document.getElementById('bentoVisSub').textContent = visKm > 8 ? 'Crystal clear' : 'Hazy visibility';
+
+      const presVal = cur.surface_pressure ? Math.round(cur.surface_pressure) : 1013;
+      animateNumber('bentoPresVal', presVal, ' hPa');
+      document.getElementById('bentoPresSub').textContent = presVal > 1020 ? 'High pressure (Fair)' : presVal < 1010 ? 'Low pressure (Unstable)' : 'Stable barometer';
 
       // Coordinates Tag
       document.getElementById('coordTag').textContent = `LAT ${state.coords.lat.toFixed(2)}° N • LON ${state.coords.lon.toFixed(2)}° E • ELEV ${state.coords.elev}m`;
 
-      // Golden Hour
-      if (daily && daily.sunset && daily.sunset[0]) {
-        const diffMs = new Date(daily.sunset[0]) - new Date();
-        if (diffMs > 0 && diffMs < 12 * 3600 * 1000) {
-          const hrs = Math.floor(diffMs / 3600000);
-          const mins = Math.floor((diffMs % 3600000) / 60000);
-          document.getElementById('goldenHourTag').innerHTML = `
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
-            Sunset in ${hrs}h ${mins}m`;
-        }
+      // Golden Hour & Sun Path Arc (FEATURE 5)
+      if (daily && daily.sunrise && daily.sunset) {
+        renderSunPathArc(daily.sunrise[1] || daily.sunrise[0], daily.sunset[1] || daily.sunset[0]);
       }
 
-      // Hourly Row & Sparkline
+      // Hourly Telemetry & Curve (FEATURE 1)
       renderHourlyAndSparkline(hourly);
 
-      // 7-Day Rows
-      render7DayForecast(daily);
+      // 15-Day Outlook (FEATURE 2)
+      render15DayForecast(daily);
 
-      // Widget Sync
+      // Widget Sync & Favorites
       updateWidgetUI(cur, daily, hourly, isDay);
       renderFavoriteChips();
 
-      // Trigger Spring Entrance Animation
       document.querySelectorAll('.stagger-in').forEach(el => {
         el.style.animation = 'none';
         el.offsetHeight;
@@ -1422,15 +1640,124 @@
       });
     }
 
+    // --- FEATURE 4: Air Quality Rendering ---
+    function renderAirQualityData(aData) {
+      if (!aData || !aData.current) return;
+      const cur = aData.current;
+      const aqi = cur.us_aqi || 35;
+      animateNumber('aqiMainVal', aqi);
+
+      let status = 'Good';
+      let color = '#10b981';
+      let bg = 'rgba(16, 185, 129, 0.2)';
+      let border = 'rgba(16, 185, 129, 0.4)';
+
+      if (aqi > 300) { status = 'Hazardous'; color = '#7c2d12'; bg = 'rgba(124, 45, 18, 0.25)'; border = 'rgba(124, 45, 18, 0.5)'; }
+      else if (aqi > 200) { status = 'Very Unhealthy'; color = '#ef4444'; bg = 'rgba(239, 68, 68, 0.2);'; border = 'rgba(239, 68, 68, 0.4)'; }
+      else if (aqi > 150) { status = 'Unhealthy'; color = '#f97316'; bg = 'rgba(249, 115, 22, 0.2)'; border = 'rgba(249, 115, 22, 0.4)'; }
+      else if (aqi > 100) { status = 'Sensitive Groups'; color = '#facc15'; bg = 'rgba(250, 204, 21, 0.2)'; border = 'rgba(250, 204, 21, 0.4)'; }
+      else if (aqi > 50) { status = 'Moderate'; color = '#38bdf8'; bg = 'rgba(56, 189, 248, 0.2)'; border = 'rgba(56, 189, 248, 0.4)'; }
+
+      const badge = document.getElementById('aqiBadgeLabel');
+      badge.textContent = status;
+      badge.style.color = color;
+      badge.style.background = bg;
+      badge.style.borderColor = border;
+
+      const percent = Math.min(Math.max((aqi / 300) * 100, 3), 97);
+      document.getElementById('aqiMarker').style.left = `${percent}%`;
+
+      const pm25 = cur.pm2_5 || 12;
+      const pm10 = cur.pm10 || 22;
+      const co = cur.carbon_monoxide || 300;
+      const so2 = cur.sulphur_dioxide || 5;
+
+      document.getElementById('pm25Val').textContent = pm25.toFixed(1);
+      document.getElementById('pm25Fill').style.width = `${Math.min((pm25 / 75) * 100, 100)}%`;
+
+      document.getElementById('pm10Val').textContent = pm10.toFixed(1);
+      document.getElementById('pm10Fill').style.width = `${Math.min((pm10 / 150) * 100, 100)}%`;
+
+      document.getElementById('coVal').textContent = Math.round(co);
+      document.getElementById('coFill').style.width = `${Math.min((co / 10000) * 100, 100)}%`;
+
+      document.getElementById('so2Val').textContent = so2.toFixed(1);
+      document.getElementById('so2Fill').style.width = `${Math.min((so2 / 50) * 100, 100)}%`;
+    }
+
+    // --- FEATURE 5: Live Sun Path Arc Card ---
+    function renderSunPathArc(sunriseStr, sunsetStr) {
+      if (!sunriseStr || !sunsetStr) return;
+      const rise = new Date(sunriseStr);
+      const set = new Date(sunsetStr);
+      const now = new Date();
+
+      const totalDaylightMs = set - rise;
+      const elapsedMs = now - rise;
+      let progress = Math.min(Math.max(elapsedMs / totalDaylightMs, 0), 1);
+
+      const remainMs = set - now;
+      if (remainMs > 0) {
+        const hrs = Math.floor(remainMs / 3600000);
+        const mins = Math.floor((remainMs % 3600000) / 60000);
+        document.getElementById('goldenHourTag').innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>
+          Sunset in ${hrs}h ${mins}m`;
+        document.getElementById('daylightDurationLabel').textContent = `Daylight remaining: ${hrs}h ${mins}m`;
+      } else {
+        document.getElementById('daylightDurationLabel').textContent = 'Nighttime (Sun below horizon)';
+      }
+
+      document.getElementById('sunriseTimeText').textContent = `Sunrise ${rise.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+      document.getElementById('sunsetTimeText').textContent = `Sunset ${set.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+
+      // Draw SVG Arc & Sun Node
+      const width = 300, height = 75;
+      const startX = 30, startY = 65;
+      const endX = 270, endY = 65;
+      const ctrlX = 150, ctrlY = 5;
+
+      // Quadratic bezier point calculation for sun node
+      const t = progress;
+      const sunX = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * ctrlX + t * t * endX;
+      const sunY = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * ctrlY + t * t * endY;
+
+      document.getElementById('sunArcSvg').innerHTML = `
+        <defs>
+          <linearGradient id="sunArcGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="#fde047" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#f97316" stop-opacity="0.4"/>
+          </linearGradient>
+          <filter id="sunNodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        <path d="M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}" fill="none" stroke="url(#sunArcGrad)" stroke-width="3" stroke-dasharray="4 4" />
+        <path d="M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${sunX} ${sunY}" fill="none" stroke="#fde047" stroke-width="3.5" stroke-linecap="round" />
+        <circle cx="${sunX}" cy="${sunY}" r="7" fill="#fde047" filter="url(#sunNodeGlow)" />
+        <circle cx="${sunX}" cy="${sunY}" r="3.5" fill="#ffffff" />
+      `;
+    }
+
+    // --- FEATURE 1: Interactive Scrubbable Hourly Temperature Curve ---
+    let globalHourlyData = null;
+
     function renderHourlyAndSparkline(hourly) {
       if (!hourly || !hourly.time) return;
+      globalHourlyData = hourly;
       const hourlyRow = document.getElementById('hourlyRow');
       hourlyRow.innerHTML = '';
 
-      const temps = hourly.temperature_2m.slice(0, 24);
-      const times = hourly.time.slice(0, 24);
-      const codes = hourly.weather_code.slice(0, 24);
-      const pops = hourly.precipitation_probability ? hourly.precipitation_probability.slice(0, 24) : [];
+      // Let's take 24 hours starting from current hour or index 24 (since past_days=1 is included, today starts around index 24)
+      const startIndex = Math.max(0, hourly.time.findIndex(t => new Date(t) >= new Date()) - 1);
+      const temps = hourly.temperature_2m.slice(startIndex, startIndex + 24);
+      const times = hourly.time.slice(startIndex, startIndex + 24);
+      const codes = hourly.weather_code.slice(startIndex, startIndex + 24);
+      const pops = hourly.precipitation_probability ? hourly.precipitation_probability.slice(startIndex, startIndex + 24) : [];
+      const winds = hourly.wind_speed_10m ? hourly.wind_speed_10m.slice(startIndex, startIndex + 24) : [];
+      const uvs = hourly.uv_index ? hourly.uv_index.slice(startIndex, startIndex + 24) : [];
 
       times.forEach((tStr, i) => {
         const date = new Date(tStr);
@@ -1440,33 +1767,82 @@
         const iconSvg = getWeatherSVG(codes[i], isD, 32);
 
         const card = document.createElement('div');
-        card.className = 'hourly-mini-card';
+        card.className = `hourly-mini-card ${i === state.activeHourIdx ? 'active' : ''}`;
         card.innerHTML = `
           <span class="hourly-time">${i === 0 ? 'Now' : h + ':00'}</span>
           <div class="hourly-svg-icon">${iconSvg}</div>
           <span class="hourly-temp">${formatTemp(temps[i])}°</span>
           <span class="pop-badge">${popVal > 15 ? popVal + '%' : ''}</span>
         `;
+        card.onclick = () => selectActiveHour(i, temps, times, winds, uvs);
         hourlyRow.appendChild(card);
       });
 
-      // SVG Sparkline
+      // Render Sparkline Curve with color grading & glowing ring node
       const minT = Math.min(...temps), maxT = Math.max(...temps), range = (maxT - minT) || 1;
-      const width = 300, height = 40;
+      const width = 300, height = 60;
       const points = temps.map((t, i) => {
         const x = (i / (temps.length - 1)) * width;
-        const y = height - ((t - minT) / range) * (height - 10) - 5;
+        const y = height - ((t - minT) / range) * (height - 18) - 9;
         return `${x.toFixed(1)},${y.toFixed(1)}`;
       }).join(' ');
 
+      const activeX = (state.activeHourIdx / (temps.length - 1)) * width;
+      const activeY = height - ((temps[state.activeHourIdx] - minT) / range) * (height - 18) - 9;
+
       document.getElementById('sparklineSvg').innerHTML = `
-        <polygon points="0,${height} ${points} ${width},${height}" fill="rgba(56, 189, 248, 0.2)" />
-        <polyline points="${points}" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+        <defs>
+          <linearGradient id="tempCurveGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#10b981"/>
+            <stop offset="50%" stop-color="#38bdf8"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+          <filter id="curveNodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        <polygon points="0,${height} ${points} ${width},${height}" fill="rgba(56, 189, 248, 0.15)" />
+        <polyline points="${points}" fill="none" stroke="url(#tempCurveGrad)" stroke-width="3" stroke-linecap="round" />
+        <circle cx="${activeX}" cy="${activeY}" r="7" fill="none" stroke="#fde047" stroke-width="2.5" filter="url(#curveNodeGlow)" />
+        <circle cx="${activeX}" cy="${activeY}" r="3.5" fill="#f59e0b" />
       `;
+
+      // Select default active hour info
+      selectActiveHour(state.activeHourIdx, temps, times, winds, uvs);
     }
 
-    function render7DayForecast(daily) {
+    function selectActiveHour(idx, temps, times, winds, uvs) {
+      state.activeHourIdx = idx;
+      const d = new Date(times[idx]);
+      const timeLabel = idx === 0 ? 'Now' : d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+      const tempVal = formatTemp(temps[idx]);
+      const windVal = formatSpeed(winds[idx] || 10);
+      const uvVal = uvs[idx] !== undefined ? uvs[idx].toFixed(1) : '2.1';
+      const speedUnit = state.unit === 'F' ? 'mph' : 'km/h';
+
+      document.getElementById('hourlyReadoutVal').innerHTML = `
+        <span>${timeLabel}: <b>${tempVal}°${state.unit}</b></span> • 
+        <span style="display:inline-flex; align-items:center; gap:4px;"><svg class="wind-fan-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px;"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4"/></svg>${windVal} ${speedUnit}</span> • 
+        <span>UV ${uvVal}</span>
+      `;
+
+      // Highlight card in row
+      const cards = document.querySelectorAll('.hourly-mini-card');
+      cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+
+      // Re-render sparkline to move glowing ring node
+      if (globalHourlyData) {
+        renderHourlyAndSparkline(globalHourlyData);
+      }
+    }
+
+    // --- FEATURE 2: Expandable 15-Day Forecast (Including Yesterday) ---
+    let globalDailyData = null;
+
+    function render15DayForecast(daily) {
       if (!daily || !daily.time) return;
+      globalDailyData = daily;
       const container = document.getElementById('dailyContainer');
       container.innerHTML = '';
 
@@ -1475,9 +1851,18 @@
       const weekRange = (weekMax - weekMin) || 1;
       const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-      daily.time.forEach((tStr, i) => {
+      const limit = state.forecastExpanded ? daily.time.length : 7;
+
+      for (let i = 0; i < Math.min(limit, daily.time.length); i++) {
+        const tStr = daily.time[i];
         const d = new Date(tStr);
-        const dayLabel = i === 0 ? 'Today' : daysOfWeek[d.getDay()];
+        let dayLabel = daysOfWeek[d.getDay()];
+        let isYesterday = false;
+
+        if (i === 0) { dayLabel = 'Yesterday'; isYesterday = true; }
+        else if (i === 1) { dayLabel = 'Today'; }
+        else if (i === 2) { dayLabel = 'Tomorrow'; }
+
         const maxT = daily.temperature_2m_max[i];
         const minT = daily.temperature_2m_min[i];
         const popMax = daily.precipitation_probability_max ? daily.precipitation_probability_max[i] : 0;
@@ -1487,7 +1872,7 @@
         const widthPercent = Math.max(((maxT - minT) / weekRange) * 100, 10);
 
         const row = document.createElement('div');
-        row.className = 'daily-row';
+        row.className = `daily-row ${isYesterday ? 'is-yesterday' : ''}`;
         row.innerHTML = `
           <div class="daily-day-name">${dayLabel}</div>
           <div class="daily-icon-desc">
@@ -1503,7 +1888,17 @@
           </div>
         `;
         container.appendChild(row);
-      });
+      }
+
+      const btnText = document.getElementById('expandBtnText');
+      btnText.textContent = state.forecastExpanded ? 'Collapse 15-Day Outlook' : 'View 15-Day Full Outlook (Inc. Yesterday)';
+    }
+
+    function toggleExpandForecast() {
+      state.forecastExpanded = !state.forecastExpanded;
+      if (globalDailyData) {
+        render15DayForecast(globalDailyData);
+      }
     }
 
     function updateWidgetUI(cur, daily, hourly, isDay) {
@@ -1512,7 +1907,7 @@
       document.getElementById('wSvgWrap').innerHTML = getWeatherSVG(cur.weather_code, isDay, 18);
 
       if (daily) {
-        document.getElementById('wHighLow').textContent = `H: ${formatTemp(daily.temperature_2m_max[0])}° L: ${formatTemp(daily.temperature_2m_min[0])}°`;
+        document.getElementById('wHighLow').textContent = `H: ${formatTemp(daily.temperature_2m_max[1] || daily.temperature_2m_max[0])}° L: ${formatTemp(daily.temperature_2m_min[1] || daily.temperature_2m_min[0])}°`;
       }
       document.getElementById('wWind').textContent = `Wind: ${formatSpeed(cur.wind_speed_10m)} ${state.unit === 'F' ? 'mph' : 'km/h'}`;
 
